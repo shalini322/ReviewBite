@@ -70,7 +70,7 @@ The project follows a decoupled **Client-Server architecture**.
 ## 🌐 Deployment Status
 | Component | Provider | URL |
 | --------- | -------- | --- |
-| Frontend  | Vercel   | [ReviewBite Frontend](https://review-bite-frontend-5hrm4kvzz-shalini2.vercel.app) |
+| Frontend  | Vercel   | [ReviewBite Frontend](https://review-bite-frontend.vercel.app/) |
 | Backend   | Render   | [ReviewBite Backend](https://reviewbite-backend.onrender.com) |
 
 ---
