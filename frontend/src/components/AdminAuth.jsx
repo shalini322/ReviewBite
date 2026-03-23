@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { ShieldCheck, Lock, ArrowRight, User, Terminal } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { buildApiUrl } from '../config/api';
 
 export default function AdminAuth() {
   const navigate = useNavigate();
@@ -13,11 +14,6 @@ export default function AdminAuth() {
     password: "",
     adminMasterKey: "",
   });
-
-  // ✅ Step 1: Dynamic API URL Selection
-  // It uses the Vercel Environment Variable if available, otherwise defaults to localhost
-  const RAW_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-  const API_BASE_URL = RAW_URL.replace(/\/$/, ""); // Removes trailing slash to prevent //api errors
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,8 +33,7 @@ export default function AdminAuth() {
         role: "ADMIN",
       };
 
-      // ✅ Step 2: Request to your Render Backend
-      const { data } = await axios.post(`${API_BASE_URL}${endpoint}`, payload);
+      const { data } = await axios.post(buildApiUrl(endpoint), payload);
 
       // Save session data
       localStorage.setItem("token", data.token);

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Send, CheckCircle, ShieldAlert, Lock, UserPlus } from 'lucide-react';
+import { buildApiUrl } from '../config/api';
 
 export default function ReviewForm({ restaurantSlug, onReviewSubmitted }) {
 
@@ -42,7 +43,7 @@ export default function ReviewForm({ restaurantSlug, onReviewSubmitted }) {
     try {
       // API request to submit review
       const response = await fetch(
-        `http://localhost:5000/api/restaurants/${restaurantSlug}/reviews`,
+        buildApiUrl(`/api/restaurants/${restaurantSlug}/reviews`),
         {
           method: 'POST',
           headers: {

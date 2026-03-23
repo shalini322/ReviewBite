@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { X, Upload, MapPin, User as UserIcon, ShieldCheck } from 'lucide-react';
+import { buildApiUrl } from '../config/api';
 
 export default function AddRestaurantModal({ isOpen, onClose, onRefresh, editData }) {
   // 1. Get the current logged-in user from localStorage
@@ -67,9 +68,9 @@ export default function AddRestaurantModal({ isOpen, onClose, onRefresh, editDat
       ownerUsername: currentUser.username 
     };
 
-    const url = editData 
-      ? `http://localhost:5000/api/restaurants/${editData.slug}` 
-      : 'http://localhost:5000/api/restaurants';
+    const url = editData
+      ? buildApiUrl(`/api/restaurants/${editData.slug}`)
+      : buildApiUrl('/api/restaurants');
     
     const method = editData ? 'PUT' : 'POST';
 
@@ -92,7 +93,7 @@ export default function AddRestaurantModal({ isOpen, onClose, onRefresh, editDat
       }
     } catch (error) {
       console.error('Submission error:', error);
-      alert("Check if your server is running on localhost:5000");
+      alert('Unable to connect to the backend. Please check your API URL configuration.');
     }
   };
 

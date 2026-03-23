@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Store, User, Phone, Lock, Utensils, ArrowRight, AtSign } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { buildApiUrl } from '../config/api';
 
 export default function OwnerAuth() {
   const navigate = useNavigate();
@@ -15,10 +16,6 @@ export default function OwnerAuth() {
     phoneNumber: "",
     password: "",
   });
-
-  // ✅ Step 1: Dynamic and Cleaned API URL
-  const RAW_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-  const API_BASE_URL = RAW_URL.replace(/\/$/, ""); 
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -46,11 +43,7 @@ export default function OwnerAuth() {
             role: "OWNER",
           };
 
-      // ✅ Step 3: Production Request
-      const { data } = await axios.post(
-        `${API_BASE_URL}${endpoint}`,
-        payload
-      );
+      const { data } = await axios.post(buildApiUrl(endpoint), payload);
 
       localStorage.setItem("token", data.token);
       const userToSave = data.owner || data.user || data.account;

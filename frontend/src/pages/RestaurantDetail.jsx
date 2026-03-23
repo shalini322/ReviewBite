@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ReviewForm from '../components/ReviewForm';
 import { MapPin, ThumbsUp } from 'lucide-react';
+import { buildApiUrl } from '../config/api';
 
 export default function RestaurantDetail() {
   const { slug } = useParams();
@@ -11,7 +12,7 @@ export default function RestaurantDetail() {
   // Fetch restaurant data by slug
   const fetchRestaurantData = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/restaurants/${slug}`);
+      const response = await fetch(buildApiUrl(`/api/restaurants/${slug}`));
       const data = await response.json();
       setRestaurant(data);
     } catch (err) {
