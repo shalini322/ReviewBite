@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Loader2, Trophy, TrendingUp, Medal } from 'lucide-react';
+import { buildApiUrl } from '../config/api';
 
 export default function Leaderboard() {
   const [restaurants, setRestaurants] = useState([]);
@@ -12,7 +13,7 @@ export default function Leaderboard() {
 
   const fetchLeaderboard = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/restaurants');
+      const response = await fetch(buildApiUrl('/api/restaurants'));
       const data = await response.json();
       // Sort restaurants by sentiment score descending
       setRestaurants(data.sort((a, b) => b.sentiment_score - a.sentiment_score) || []);

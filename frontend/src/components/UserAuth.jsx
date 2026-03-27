@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Camera, User, Phone, Lock, ArrowRight } from "lucide-react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { buildApiUrl } from '../config/api';
 
 export default function UserAuth() {
   const navigate = useNavigate();
@@ -15,10 +16,6 @@ export default function UserAuth() {
     phoneNumber: "",
     password: "",
   });
-
-  // ✅ Step 1: Cleaned Production URL
-  const RAW_URL = import.meta.env.VITE_API_URL || "http://localhost:5000";
-  const API_BASE_URL = RAW_URL.replace(/\/$/, "");
 
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -57,8 +54,7 @@ export default function UserAuth() {
             profilePic: profilePic || "", // Send Base64 or empty
           };
 
-      // ✅ Step 3: Production Request
-      const { data } = await axios.post(`${API_BASE_URL}${endpoint}`, payload);
+      const { data } = await axios.post(buildApiUrl(endpoint), payload);
 
       localStorage.setItem("token", data.token);
       const userToSave = data.user || data.account;

@@ -3,6 +3,7 @@ import RestaurantCard from '../components/RestaurantCard';
 import AddRestaurantModal from '../components/AddRestaurantModal'; 
 import { Loader2, Plus, MapPin } from 'lucide-react';
 import axios from 'axios';
+import { buildApiUrl } from '../config/api';
 
 export default function Restaurants() {
   const [restaurants, setRestaurants] = useState([]);
@@ -21,7 +22,7 @@ export default function Restaurants() {
   // Fetch all restaurants
   const fetchRestaurants = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/restaurants');
+      const response = await fetch(buildApiUrl('/api/restaurants'));
       if (!response.ok) throw new Error('Failed to fetch restaurants');
       const data = await response.json();
       setRestaurants(data || []);
@@ -36,7 +37,7 @@ export default function Restaurants() {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:5000/api/restaurants/${id}`, {
+      await axios.delete(buildApiUrl(`/api/restaurants/${id}`), {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchRestaurants();
